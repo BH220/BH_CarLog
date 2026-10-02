@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>BH_CarLog</RootNamespace>
+		<AssemblyName>BH_CarLogs</AssemblyName>
+		<ApplicationIcon>Assets\app.ico</ApplicationIcon>
+		<Version>1.0.0</Version>
+		<Product>BH Car Logs</Product>
+		<Company>BH Soft</Company>
+		<NoWarn>$(NoWarn);CS8618;CS8601;CS8602;CS8603;CS8604;CS8625;CS8600</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\BH_CarLog.Api\BH_CarLog.Api.csproj" />
+		<ProjectReference Include="..\BH_CarLog.Core\BH_CarLog.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Assets\app.ico" />
+		<Resource Include="Assets\Images\*.png" />
+	</ItemGroup>
+</Project>

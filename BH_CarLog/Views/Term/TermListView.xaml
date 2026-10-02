@@ -1,0 +1,104 @@
+<UserControl x:Class="BH_CarLog.Views.Term.TermListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+             xmlns:common="clr-namespace:BH_CarLog.Views.Common"
+             xmlns:vm="clr-namespace:BH_CarLog.ViewModels.Term"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:TermListViewModel}">
+    <UserControl.Resources>
+        <!--  구분 칩. 교환필요=빨강, 확인필요=주황, 확인불가=회색, 정상=초록  -->
+        <Style x:Key="StatusChip" TargetType="Border">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="8,2" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Background" Value="{StaticResource SuccessSoftBrush}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="교환필요">
+                    <Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="확인필요">
+                    <Setter Property="Background" Value="{StaticResource WarningSoftBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="확인불가">
+                    <Setter Property="Background" Value="{StaticResource BgHoverBrush}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="StatusChipText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource SuccessTextBrush}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="교환필요">
+                    <Setter Property="Foreground" Value="{StaticResource DangerTextBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="확인필요">
+                    <Setter Property="Foreground" Value="{StaticResource WarningTextBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="확인불가">
+                    <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <common:ListPageHeader Grid.Row="0" />
+
+        <Border Grid.Row="1"
+                Margin="0,0,0,10"
+                Padding="12,8"
+                Background="{StaticResource AccentSoftBrush}"
+                CornerRadius="4">
+            <TextBlock FontSize="12"
+                       Foreground="{StaticResource TextBrush}"
+                       Text="소모품마다 교체이력의 최근 교환일·주행거리와 차량의 최근 주행거리로 남은 주기·거리를 계산합니다. 음수면 지난 것입니다. 교체이력(F1)에서 유지보수 기록을 이어 두어야 계산됩니다."
+                       TextWrapping="Wrap" />
+        </Border>
+
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding ItemsView}"
+                  SelectedItem="{Binding SelectedItem}"
+                  helpers:DataGridBehavior.RowDoubleClickCommand="{Binding UpdateCommand}"
+                  helpers:DataGridBehavior.SelectRowOnRightClick="True"
+                  helpers:DataGridBehavior.ScrollSelectionIntoView="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="교체이력" InputGestureText="F1" Command="{Binding ShowHistoryCommand}" />
+                    <Separator />
+                    <MenuItem Header="갱신" InputGestureText="F5" Command="{Binding RefreshCommand}" IsEnabled="{Binding Buttons.RefreshEnabled}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <!--  항목: TermStatusInfo (기존 frmTermList 컬럼 구성)  -->
+                <DataGridTemplateColumn Header="구분" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource StatusChip}">
+                                <TextBlock Style="{StaticResource StatusChipText}" Text="{Binding Status}" />
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="소모품명" Binding="{Binding name}" Width="*" />
+                <DataGridTextColumn Header="교환주기" Binding="{Binding TermText}" Width="90" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="교환거리" Binding="{Binding DistanceText}" Width="100" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="교환횟수" Binding="{Binding CountText}" Width="80" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="최근교환일" Binding="{Binding last_changed_at, Converter={StaticResource DateFmt}}" Width="100" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="최근교환거리" Binding="{Binding LastMileageText}" Width="110" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="남은주기" Binding="{Binding DaysLeftText}" Width="90" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="남은거리" Binding="{Binding DistanceLeftText}" Width="100" ElementStyle="{StaticResource RightCellText}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

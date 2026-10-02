@@ -1,0 +1,25 @@
+<UserControl x:Class="BH_CarLog.Views.Common.ShopPickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+             xmlns:vm="clr-namespace:BH_CarLog.ViewModels.Common"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:ShopPickerViewModel}">
+    <!--
+        DataContext: ShopPickerViewModel (기존 BhSearchItem).
+        다른 입력란과 같은 일반 TextBox 하나뿐이다. 가게명 일부를 치고 Enter:
+        하나만 맞으면 그 가게로 확정하고 다음 칸으로, 여럿이면 그 글자로 걸러진 선택 창, 빈 채로 Enter 면 전체 목록.
+    -->
+    <Grid>
+        <!--  Enter 는 여기서 직접 처리(가게 찾기)한 뒤 EnterNavigation.MoveToNext 로 넘기므로, 창의 Enter 이동은 이 칸을 건너뛴다.  -->
+        <TextBox x:Name="InputBox"
+                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding IsReadOnly}"
+                 helpers:FocusExtension.IsFocused="{Binding IsFocused}"
+                 helpers:EnterNavigation.Skip="True"
+                 PreviewKeyDown="InputBox_PreviewKeyDown"
+                 ToolTip="가게명 일부를 입력하고 Enter. 하나만 맞으면 그 가게로, 여럿이면 선택 창이 열립니다. 빈 채로 Enter 면 전체 목록입니다." />
+    </Grid>
+</UserControl>

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH_CarLog", "BH_CarLog\BH_CarLog.csproj", "{A0CE170A-5476-46C7-9518-708E47494DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Core", "0.Core", "{C8D5274F-AC00-46C7-1F8D-E88E81087A52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Execute", "2.Execute", "{5848AF90-006E-E38B-7F64-F99DF9244BC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Moudle", "1.Moudle", "{5AEDC995-9A84-D21E-A776-162FF4653AEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Publish", "3.Publish", "{99318E03-F892-4F2F-8B9F-30B65F462374}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH_CarLog.Api", "BH_CarLog.Api\BH_CarLog.Api.csproj", "{21E4E224-DDD8-416F-AE6A-479044ED4DEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BH_CarLog.Core", "BH_CarLog.Core\BH_CarLog.Core.csproj", "{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1}"
+EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "docs", "docs\docs.msbuildproj", "{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0CE170A-5476-46C7-9518-708E47494DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CE170A-5476-46C7-9518-708E47494DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CE170A-5476-46C7-9518-708E47494DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CE170A-5476-46C7-9518-708E47494DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21E4E224-DDD8-416F-AE6A-479044ED4DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21E4E224-DDD8-416F-AE6A-479044ED4DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21E4E224-DDD8-416F-AE6A-479044ED4DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21E4E224-DDD8-416F-AE6A-479044ED4DEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0CE170A-5476-46C7-9518-708E47494DAC} = {5848AF90-006E-E38B-7F64-F99DF9244BC9}
+		{21E4E224-DDD8-416F-AE6A-479044ED4DEA} = {5AEDC995-9A84-D21E-A776-162FF4653AEC}
+		{3AB2AB2D-1698-4D89-AC2A-9D59E090A7E1} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
+		{E52F61EE-8AC9-3322-8738-BC9BBDC4ADEB} = {99318E03-F892-4F2F-8B9F-30B65F462374}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89CF39FA-2B7D-42F1-9833-0248AE985625}
+	EndGlobalSection
+EndGlobal

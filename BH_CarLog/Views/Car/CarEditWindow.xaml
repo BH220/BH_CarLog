@@ -1,0 +1,110 @@
+<Window x:Class="BH_CarLog.Views.Car.CarEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+        xmlns:vm="clr-namespace:BH_CarLog.ViewModels.Car"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:CarEditViewModel}"
+        Style="{StaticResource DarkDialog}"
+        Title="{Binding Title}"
+        Width="560"
+        SizeToContent="Height"
+        helpers:DialogBehavior.DialogResult="{Binding DialogResult}"
+        helpers:EnterNavigation.IsEnabled="True">
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}" />
+    </Window.InputBindings>
+
+    <DockPanel Margin="20">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <Button Content="저장 후 계속" Command="{Binding SaveContinueCommand}" MinWidth="110" />
+            <Button Content="저장" Style="{StaticResource AccentButton}" Command="{Binding SaveCommand}" MinWidth="90" Margin="8,0,0,0" />
+            <Button Content="닫기" Command="{Binding CloseCommand}" MinWidth="90" Margin="8,0,0,0" />
+        </StackPanel>
+
+        <StackPanel>
+            <GroupBox Header="차량 정보" Margin="0">
+                <!--  오른쪽 라벨 폭을 RightLabel 그룹으로 맞춰 모든 줄의 입력란 좌우 경계가 같은 위치에 오게 한다.  -->
+                <Grid Grid.IsSharedSizeScope="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Style="{StaticResource RequiredLabel}"><Run Text="차번호" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                    <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="RightLabel" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding CarNo, UpdateSourceTrigger=PropertyChanged}"
+                                 MaxLength="20"
+                                 FontFamily="{StaticResource MonoFont}"
+                                 helpers:FocusExtension.IsFocused="{Binding IsCarNoFocused}" />
+                        <TextBlock Grid.Column="2" Style="{StaticResource RequiredLabel}" MinWidth="0"><Run Text="이름" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                        <TextBox Grid.Column="3" Text="{Binding CarName, UpdateSourceTrigger=PropertyChanged}" MaxLength="10" ToolTip="차량 애칭 (최대 10자)" />
+                    </Grid>
+
+                    <TextBlock Grid.Row="1" Style="{StaticResource RequiredLabel}"><Run Text="차종" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,8"
+                             Text="{Binding CarType, UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="50" />
+
+                    <TextBlock Grid.Row="2" Style="{StaticResource RequiredLabel}"><Run Text="년식" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                    <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="RightLabel" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding BornYear, UpdateSourceTrigger=PropertyChanged}"
+                                 MaxLength="4"
+                                 helpers:NumericTextBoxBehavior.IsNumericOnly="True"
+                                 ToolTip="네 자리 연도 (예: 2019)" />
+                        <TextBlock Grid.Column="2" Style="{StaticResource RequiredLabel}" MinWidth="0"><Run Text="연료" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                        <ComboBox Grid.Column="3" ItemsSource="{Binding Fuels}" SelectedItem="{Binding SelectedFuel}" DisplayMemberPath="NmCode" Tag="연료 선택" />
+                    </Grid>
+
+                    <TextBlock Grid.Row="3" Style="{StaticResource RequiredLabel}"><Run Text="배기량" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                    <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="RightLabel" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding Cc, UpdateSourceTrigger=PropertyChanged}" MaxLength="50" ToolTip="예: 1999" />
+                        <TextBlock Grid.Column="2" Style="{StaticResource RequiredLabel}" MinWidth="0"><Run Text="구입일" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                        <DatePicker Grid.Column="3" SelectedDate="{Binding BuyAt}" />
+                    </Grid>
+
+                    <TextBlock Grid.Row="4" Style="{StaticResource RequiredLabel}"><Run Text="차대번호" /><Run Text=" *" Foreground="{StaticResource DangerBrush}" /></TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Margin="0,0,0,8"
+                             Text="{Binding Vin, UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="50"
+                             FontFamily="{StaticResource MonoFont}" />
+
+                    <TextBlock Grid.Row="5" Text="비고" Style="{StaticResource FieldLabel}" VerticalAlignment="Top" Margin="0,6,12,0" />
+                    <TextBox Grid.Row="5" Grid.Column="1"
+                             Style="{StaticResource MultilineTextBox}"
+                             Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="500"
+                             MinHeight="70" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </DockPanel>
+</Window>

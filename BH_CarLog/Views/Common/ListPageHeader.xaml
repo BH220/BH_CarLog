@@ -1,0 +1,31 @@
+<UserControl
+    x:Class="BH_CarLog.Views.Common.ListPageHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="clr-namespace:BH_CarLog.Helpers">
+    <!--  DataContext: ListViewModelBase (Title / TotalCount / SearchText / IsSearchFocused)  -->
+    <Grid Margin="0,0,0,12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource TitleText}" Text="{Binding Title}" />
+            <TextBlock Margin="0,2,0,0" Style="{StaticResource SubtitleText}">
+                <Run Text="총 " /><Run Text="{Binding TotalCount, Mode=OneWay}" /><Run Text="건" />
+            </TextBlock>
+        </StackPanel>
+
+        <!--  워터마크(Tag)는 SearchTextBox 템플릿 안에서 입력 글자와 같은 자리에 그려진다  -->
+        <TextBox
+            Grid.Column="2"
+            Width="300"
+            VerticalAlignment="Center"
+            helpers:FocusExtension.IsFocused="{Binding IsSearchFocused}"
+            Style="{StaticResource SearchTextBox}"
+            Tag="검색 (F6)"
+            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
+</UserControl>

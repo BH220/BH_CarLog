@@ -1,0 +1,42 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vCar="clr-namespace:BH_CarLog.Views.Car"
+    xmlns:vConsumable="clr-namespace:BH_CarLog.Views.Consumable"
+    xmlns:vFuel="clr-namespace:BH_CarLog.Views.Fuel"
+    xmlns:vMaintenance="clr-namespace:BH_CarLog.Views.Maintenance"
+    xmlns:vNewMessage="clr-namespace:BH_CarLog.Views.NewMessage"
+    xmlns:vShop="clr-namespace:BH_CarLog.Views.Shop"
+    xmlns:vTerm="clr-namespace:BH_CarLog.Views.Term"
+    xmlns:vmCar="clr-namespace:BH_CarLog.ViewModels.Car"
+    xmlns:vmConsumable="clr-namespace:BH_CarLog.ViewModels.Consumable"
+    xmlns:vmFuel="clr-namespace:BH_CarLog.ViewModels.Fuel"
+    xmlns:vmMaintenance="clr-namespace:BH_CarLog.ViewModels.Maintenance"
+    xmlns:vmNewMessage="clr-namespace:BH_CarLog.ViewModels.NewMessage"
+    xmlns:vmShop="clr-namespace:BH_CarLog.ViewModels.Shop"
+    xmlns:vmTerm="clr-namespace:BH_CarLog.ViewModels.Term">
+
+    <!--  메인 컨텐츠 영역: ViewModel → View 매핑  -->
+    <DataTemplate DataType="{x:Type vmNewMessage:NewMessageListViewModel}">
+        <vNewMessage:NewMessageListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmFuel:FuelListViewModel}">
+        <vFuel:FuelListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmMaintenance:MaintenanceListViewModel}">
+        <vMaintenance:MaintenanceListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmConsumable:ConsumableListViewModel}">
+        <vConsumable:ConsumableListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmTerm:TermListViewModel}">
+        <vTerm:TermListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmCar:CarListViewModel}">
+        <vCar:CarListView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vmShop:CarShopListViewModel}">
+        <vShop:CarShopListView />
+    </DataTemplate>
+
+</ResourceDictionary>

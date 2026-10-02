@@ -1,0 +1,46 @@
+<UserControl x:Class="BH_CarLog.Views.Shop.CarShopListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+             xmlns:common="clr-namespace:BH_CarLog.Views.Common"
+             xmlns:vm="clr-namespace:BH_CarLog.ViewModels.Shop"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:CarShopListViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <common:ListPageHeader Grid.Row="0" />
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding ItemsView}"
+                  SelectedItem="{Binding SelectedItem}"
+                  helpers:DataGridBehavior.RowDoubleClickCommand="{Binding UpdateCommand}"
+                  helpers:DataGridBehavior.SelectRowOnRightClick="True"
+                  helpers:DataGridBehavior.ScrollSelectionIntoView="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="추가" InputGestureText="Ins" Command="{Binding InsertCommand}" IsEnabled="{Binding Buttons.InsertEnabled}" />
+                    <MenuItem Header="수정" InputGestureText="F8" Command="{Binding UpdateCommand}" IsEnabled="{Binding Buttons.UpdateEnabled}" />
+                    <MenuItem Header="삭제" InputGestureText="Del" Command="{Binding DeleteCommand}" IsEnabled="{Binding Buttons.DeleteEnabled}" />
+                    <Separator />
+                    <MenuItem Header="갱신" InputGestureText="F5" Command="{Binding RefreshCommand}" IsEnabled="{Binding Buttons.RefreshEnabled}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <!--  항목: CarShopInfo  -->
+                <DataGridTextColumn Header="유형" Binding="{Binding shop_type}" Width="70" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="상호" Binding="{Binding name}" Width="1.4*" />
+                <DataGridTextColumn Header="사업자번호" Binding="{Binding business_no}" Width="110" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="대표자" Binding="{Binding ceo}" Width="90" />
+                <DataGridTextColumn Header="연락처" Binding="{Binding tel}" Width="120" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="주소" Binding="{Binding address}" Width="2*" ElementStyle="{StaticResource MutedCellText}" />
+                <DataGridTextColumn Header="비고" Binding="{Binding note}" Width="*" ElementStyle="{StaticResource MutedCellText}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

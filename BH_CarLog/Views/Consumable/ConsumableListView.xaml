@@ -1,0 +1,44 @@
+<UserControl x:Class="BH_CarLog.Views.Consumable.ConsumableListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+             xmlns:common="clr-namespace:BH_CarLog.Views.Common"
+             xmlns:vm="clr-namespace:BH_CarLog.ViewModels.Consumable"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:ConsumableListViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <common:ListPageHeader Grid.Row="0" />
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding ItemsView}"
+                  SelectedItem="{Binding SelectedItem}"
+                  helpers:DataGridBehavior.RowDoubleClickCommand="{Binding UpdateCommand}"
+                  helpers:DataGridBehavior.SelectRowOnRightClick="True"
+                  helpers:DataGridBehavior.ScrollSelectionIntoView="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="교체이력" InputGestureText="F1" Command="{Binding ShowHistoryCommand}" />
+                    <Separator />
+                    <MenuItem Header="추가" InputGestureText="Ins" Command="{Binding InsertCommand}" IsEnabled="{Binding Buttons.InsertEnabled}" />
+                    <MenuItem Header="수정" InputGestureText="F8" Command="{Binding UpdateCommand}" IsEnabled="{Binding Buttons.UpdateEnabled}" />
+                    <MenuItem Header="삭제" InputGestureText="Del" Command="{Binding DeleteCommand}" IsEnabled="{Binding Buttons.DeleteEnabled}" />
+                    <Separator />
+                    <MenuItem Header="갱신" InputGestureText="F5" Command="{Binding RefreshCommand}" IsEnabled="{Binding Buttons.RefreshEnabled}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <!--  항목: ConsumableInfo. 차량은 상단에서 고른 차로 이미 걸러져 있으므로 컬럼으로 두지 않는다.  -->
+                <DataGridTextColumn Header="항목명" Binding="{Binding name}" Width="*" />
+                <DataGridTextColumn Header="관리주기(일)" Binding="{Binding TermText}" Width="140" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="관리주기(거리)" Binding="{Binding DistanceText}" Width="150" ElementStyle="{StaticResource RightCellText}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

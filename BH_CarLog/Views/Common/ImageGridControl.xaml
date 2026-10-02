@@ -1,0 +1,102 @@
+<UserControl
+    x:Class="BH_CarLog.Views.Common.ImageGridControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <!--  DataContext: ImageGridViewModel<TImage> (기존 BhImageGrid). 항목은 ImageInfo 파생 모델  -->
+    <!--  첨부 이미지를 표 형태(구분/이름/가로/세로/크기)로 보여주고, 행 더블클릭으로 이미지 보기 팝업을 연다.  -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel
+                Margin="0,0,0,8"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal"
+                Visibility="{Binding IsReadOnly, Converter={StaticResource InvBoolToVis}}">
+                <Button
+                    Command="{Binding ViewCommand}"
+                    Content="보기"
+                    Style="{StaticResource ToolButton}" />
+                <Button
+                    Command="{Binding AddCommand}"
+                    Content="추가"
+                    Style="{StaticResource ToolButton}" />
+                <Button
+                    Command="{Binding DeleteCommand}"
+                    Content="삭제"
+                    Style="{StaticResource ToolButton}" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid
+                MinHeight="124"
+                MaxHeight="220"
+                helpers:DataGridBehavior.RowDoubleClickCommand="{Binding ViewCommand}"
+                ItemsSource="{Binding Images}"
+                SelectedItem="{Binding SelectedImage}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding type}"
+                        ElementStyle="{StaticResource CenterCellText}"
+                        Header="구분" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding FileName}"
+                        Header="이름" />
+                    <DataGridTextColumn
+                        Width="70"
+                        Binding="{Binding width}"
+                        ElementStyle="{StaticResource CenterCellText}"
+                        Header="가로" />
+                    <DataGridTextColumn
+                        Width="70"
+                        Binding="{Binding height}"
+                        ElementStyle="{StaticResource CenterCellText}"
+                        Header="세로" />
+                    <DataGridTextColumn
+                        Width="90"
+                        Binding="{Binding SizeText}"
+                        ElementStyle="{StaticResource CenterCellText}"
+                        Header="크기" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource SubtitleText}" TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Text" Value="첨부된 이미지가 없습니다. [추가] 버튼으로 이미지를 등록하세요." />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Images.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsReadOnly}" Value="True">
+                                <Setter Property="Text" Value="첨부된 이미지가 없습니다." />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
+        <!--  개수 표시는 표 아래  -->
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,6,0,0"
+            Style="{StaticResource SubtitleText}">
+            <Run Text="첨부 이미지 " /><Run Text="{Binding CountText, Mode=OneWay}" /><Run Text="개" />
+        </TextBlock>
+    </Grid>
+</UserControl>

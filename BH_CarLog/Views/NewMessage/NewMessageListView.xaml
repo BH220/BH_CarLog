@@ -1,0 +1,58 @@
+<UserControl x:Class="BH_CarLog.Views.NewMessage.NewMessageListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:BH_CarLog.Helpers"
+             xmlns:common="clr-namespace:BH_CarLog.Views.Common"
+             xmlns:vm="clr-namespace:BH_CarLog.ViewModels.NewMessage"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:NewMessageListViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <common:ListPageHeader Grid.Row="0" />
+
+        <!--  이 화면이 무엇인지 한 줄로 알려 준다. 다른 목록과 성격이 달라서다.  -->
+        <Border Grid.Row="1"
+                Margin="0,0,0,10"
+                Padding="12,8"
+                Background="{StaticResource AccentSoftBrush}"
+                CornerRadius="4">
+            <TextBlock FontSize="12"
+                       Foreground="{StaticResource TextBrush}"
+                       Text="웹(바로등록)으로 들어온 미처리 데이터입니다. 더블클릭이나 수정(F8)으로 내용과 사진을 확인하고, 실데이터 전환(F1)으로 주유·유지보수 기록으로 옮기세요. 사진은 함께 옮겨집니다."
+                       TextWrapping="Wrap" />
+        </Border>
+
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding ItemsView}"
+                  SelectedItem="{Binding SelectedItem}"
+                  helpers:DataGridBehavior.RowDoubleClickCommand="{Binding UpdateCommand}"
+                  helpers:DataGridBehavior.SelectRowOnRightClick="True"
+                  helpers:DataGridBehavior.ScrollSelectionIntoView="True">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="상세" InputGestureText="F8" Command="{Binding UpdateCommand}" IsEnabled="{Binding Buttons.UpdateEnabled}" />
+                    <MenuItem Header="실데이터 전환" InputGestureText="F1" Command="{Binding TransferCommand}" />
+                    <MenuItem Header="삭제" InputGestureText="Del" Command="{Binding DeleteCommand}" IsEnabled="{Binding Buttons.DeleteEnabled}" />
+                    <Separator />
+                    <MenuItem Header="갱신" InputGestureText="F5" Command="{Binding RefreshCommand}" IsEnabled="{Binding Buttons.RefreshEnabled}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <!--  항목: NewMessageInfo  -->
+                <DataGridTextColumn Header="등록일" Binding="{Binding input_at, Converter={StaticResource DateFmt}}" Width="100" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="구분" Binding="{Binding recoard_type}" Width="80" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="주행거리" Binding="{Binding mileage, StringFormat={}{0:#,0}}" Width="100" ElementStyle="{StaticResource RightCellText}" />
+                <DataGridTextColumn Header="첨부" Binding="{Binding images.Count}" Width="60" ElementStyle="{StaticResource CenterCellText}" />
+                <DataGridTextColumn Header="내용" Binding="{Binding note}" Width="*" />
+                <DataGridTextColumn Header="웹 등록일시" Binding="{Binding created_at, Converter={StaticResource DateFmt}, ConverterParameter=yyyy-MM-dd HH:mm}" Width="140" ElementStyle="{StaticResource MutedCellText}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
