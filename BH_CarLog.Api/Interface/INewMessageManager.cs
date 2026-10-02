@@ -6,13 +6,9 @@ namespace BH_CarLog.Api.Interface
     /// <summary>
     /// 새 메시지 - 웹(바로등록)으로 들어온 임시 데이터. 서버 /api/carlog/direct/*
     /// 목록(list)·상세(detail)·실데이터 전환(realize)·처리 상태 변경(status) 이 있다.
-    /// 버림(삭제)은 서버 처리 상태 코드가 전환대기·실데이터전환 둘뿐이라 아직 표현할 수 없다.
     /// </summary>
     public interface INewMessageManager
     {
-        /// <summary>버림(삭제)이 가능한지. 서버에 "버림" 처리 상태 코드(125xxx)나 삭제 API 가 생기면 true 로 바꾼다.</summary>
-        bool IsDeleteSupported { get; }
-
         /// <summary>전환대기(125001) 목록. car_num 필수 (POST /api/carlog/direct/list { car_num, transfer_type_list }). 건마다 images 포함</summary>
         Task<List<NewMessageInfo>> GetListAsync(int carNum);
 
@@ -26,7 +22,10 @@ namespace BH_CarLog.Api.Interface
         /// </summary>
         Task<(bool Success, string Message)> RealizeAsync(int recoardNum, CdMaintenanceType transferTo, int transferNum);
 
-        /// <summary>버리기. <see cref="IsDeleteSupported"/> 가 false 인 동안은 ApiNotImplementedException 을 던진다.</summary>
+        /// <summary>
+        /// 버리기 (POST /api/carlog/direct/status { transfer_type, recoard_num_list }).
+        /// 실데이터로 만들 필요 없는 메시지의 처리 상태를 전환대기에서 빼서 목록에서 사라지게 한다. 행을 지우지는 않는다.
+        /// </summary>
         Task<(bool Success, string Message)> DeleteAsync(int recoardNum);
     }
 }

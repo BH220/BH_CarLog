@@ -20,6 +20,7 @@ namespace BH_CarLog.ViewModels.NewMessage
     /// 웹 바로등록(/direct/carlog/{token}) 으로 쌓인 임시 데이터를 보여주고 실데이터로 전환한다.
     /// - 수정(F8)·더블클릭: 상세 창 (내용·사진 확인, 거기서도 전환 가능)
     /// - 실데이터 전환(F1): 유형에 맞는 주유/유지보수 입력 창에 값과 사진을 채워 띄우고, 저장되면 realize 로 전환 표시
+    /// - 삭제(Del): 실데이터로 만들 필요 없는 메시지를 status 로 전환대기에서 빼서 목록에서 치운다
     /// 데이터가 직접 만들어지는 화면이 아니라 추가·복사는 없다.
     /// </summary>
     public partial class NewMessageListViewModel : ListViewModelBase<NewMessageInfo>, IRecipient<CarChangedMessage>
@@ -84,14 +85,9 @@ namespace BH_CarLog.ViewModels.NewMessage
                 await TransferItemAsync(vm.Info);
         }
 
+        /// <summary>삭제(Del). 공통 확인창을 거친 뒤 처리 상태를 바꿔 목록에서 뺀다. (기존 DELETE_NEW_MESSAGES 의 FL_DELETE 역할)</summary>
         protected override async Task DeleteAsync(NewMessageInfo item)
         {
-            if (_manager.IsDeleteSupported == false)
-            {
-                Dialog.ShowInfo("새 메시지를 버리는 기능은 아직 서버에 없습니다.\r\n(처리 상태 코드에 \"버림\" 이 없습니다) 서버 연동이 끝나면 사용할 수 있습니다.", "구현 필요");
-                return;
-            }
-
             var (success, message) = await _manager.DeleteAsync(item.recoard_num);
             if (success)
                 await RefreshAsync();
